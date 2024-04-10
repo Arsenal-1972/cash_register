@@ -29,3 +29,44 @@
 # Vārdnīcas - https://www.w3schools.com/python/python_dictionaries.asp
 # Klonēt repozitoriju - hhttps://code.visualstudio.com/docs/sourcecontrol/intro-to-git
 #
+import json
+
+products_and_prices= []
+#atver products_and_prices kā mainīgo
+with open('products_and_prices.json', 'r') as openfile:
+    products_and_prices = json.load(openfile)
+
+while True: #Kamēr darbosies programma varēs izpildīt zemaprakstītas darbības
+    print('1. Ievadīt produkta nosaukumu un cenu')
+    print('2. Dzēst preci no produkta saraksta')
+    print('3. Iztukšot preču sarakstu')
+    print('4. Pievienot atlaidi')
+    print('5. Izdrukāt čeku')
+    print('6. Iziet no programmas')
+    choice = input('Izvelēties operāciju:')#operācijas izvelēšana
+    
+    if choice == '1':# Pievieno produktu sarakstam
+        Preces_nosaukums = input('Ievadiet preces nosaukumu:')
+        Preces_cena = input('Ievadiet preces cenu:')
+        Atlaide = input('Ievadiet preces atlaidi:')
+        saraksts = {'Preces nosaukums': Preces_nosaukums, 'Preces cena': Preces_cena, 'Preces atlaide': Atlaide}
+        products_and_prices.append(saraksts)
+    elif choice == '2':#Izdzēš tikai izveleto produktu
+        id = int(input('Ievadiet preces indeksu:'))
+        products_and_prices.pop(id)
+    elif choice == '3':#Izdzēš sarakstu ar produktiem
+        products_and_prices.clear()
+    elif choice == '4':#nestrādā
+        id = int(input('Ievadiet preces indeksu:'))
+        preces_summa_ar_atlaidi = int('Preces cena'[id])*int('Preces atlaide'[id])/100
+        print(preces_summa_ar_atlaidi)
+    elif choice == '5':#Izprintē čeku
+        print(products_and_prices)
+    elif choice == '6': # Šī funkcija izslēdz programmu saglabajot ievaditus datus
+        print('Exiting...')
+        break
+    else: # Rāda, ka ir skaitlis, kura nav operācijas izvelēšanā
+        print('Invalid choice. Please try again.')
+
+with open("products_and_prices.json", "w") as outfile:#pievieno mainīgo products_and_prices json failā
+    json.dump(products_and_prices, outfile)
